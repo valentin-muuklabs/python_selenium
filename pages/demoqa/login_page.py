@@ -10,25 +10,41 @@ class LoginPage(BasePage):
     __LOGIN_LOC = "//*[@id='login']"
     __REGISTER_LOC = "/*[@id='newUser']"
     __INVALID_USER_LOC ="//p[@id='name' and text()='Invalid username or password!']"
-    def __init__(self,driver,timeout=10 ):
-        super().__init__(driver,timeout, self.__URL)
+
+    def __init__(self, driver, timeout=10 ):
+        super().__init__(driver, timeout, self.__URL)
 
     def clickLogin(self):
-        loginLocator = (By.XPATH, self.__LOGIN_LOC)
-        loginButton = self._wait.until(EC.element_to_be_clickable(loginLocator))
+        loginButton = self.__get_element(self.__LOGIN_LOC)
         loginButton.click()
 
     def setUserName(self, value):
-        userNameLocator = (By.XPATH, self.__USERNAME_LOC)
-        userNameInput = self._wait.until(EC.element_to_be_clickable(userNameLocator))
-        userNameInput.send_keys(value)
+        self.__send_keys_to_element(self.__USERNAME_LOC, value)
 
     def setPassword(self, value):
-        passwordLocator = (By.XPATH, self.__PASSWORD_LOC)
-        passwordInput = self._wait.until(EC.element_to_be_clickable(passwordLocator))
-        passwordInput.send_keys(value)
+        self.__send_keys_to_element(self.__PASSWORD_LOC, value)
 
     def checkInvalidUser(self):
         invalidUserLocator = (By.XPATH,self.__INVALID_USER_LOC)
         self._wait.until(EC.presence_of_element_located(invalidUserLocator))
         return True
+
+
+    def get_user_name(self):
+        return self.__get_element_value(self.__USERNAME_LOC)
+
+    def get_password(self):
+        return self.__get_element_value(self.__PASSWORD_LOC)
+
+    def __send_keys_to_element(self, locator, value):
+        element = self.__get_element(locator)
+        element.send_keys(value)
+
+    def __get_element_value(self, locator):
+        element = self.__get_element(locator)
+        return element.get_attribute("value")
+
+    def __get_element(self, locator):
+        elementLocator = (By.XPATH, locator)
+        element = self._wait.until(EC.presence_of_element_located(elementLocator))
+        return element
