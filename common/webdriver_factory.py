@@ -5,8 +5,8 @@ from selenium import webdriver
 
 __COMMON_DIR = os.path.dirname(os.path.realpath(__file__))
 ROOT_DIR = os.path.dirname(__COMMON_DIR)
-__CHROME_PATH = os.path.join(ROOT_DIR, 'drivers', 'chromedriver.exe')
-__FIREFOX_PATH = os.path.join(ROOT_DIR, 'drivers', 'geckodriver.exe')
+__CHROME_PATH = os.path.join(ROOT_DIR, 'drivers', 'chromedriver')
+__FIREFOX_PATH = os.path.join(ROOT_DIR, 'drivers', 'geckodriver')
 
 
 def create_driver_instance(browser_name: str):

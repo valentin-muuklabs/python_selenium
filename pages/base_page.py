@@ -32,7 +32,7 @@ class BasePage:
 
         :return: None
         """
-        self._driver.close()
+        self._driver.quit()
 
     def get_default_timeout(self) -> int:
         """Get wait default timeout
